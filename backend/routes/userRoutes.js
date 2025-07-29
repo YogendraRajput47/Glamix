@@ -26,6 +26,8 @@ router.post("/login",userLogin)
 //@Access Private
 router.get("/profile",protect,getLoggedInUser);
 
+
+
 module.exports=router;
 
 

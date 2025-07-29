@@ -303,13 +303,52 @@ exports.getSimilarProducts = async (req, res) => {
       category: product.category,
     });
 
-    res.status(200).json({
-      success: true,
-      message: "Similar Products Found Successfully",
-      similarProducts,
-    }).limit(4);
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Similar Products Found Successfully",
+        similarProducts,
+      })
+      .limit(4);
   } catch (error) {
     console.error(error);
     res.status(500).send("Server error");
+  }
+};
+
+// getBestSellerProducts
+exports.getBestSellerProducts = async (req, res) => {
+  try {
+    const bestSeller = await Product.findOne().sort({ rating: -1 });
+    if (!bestSeller) {
+      return res.status(404).json({
+        success: false,
+        message: "No best seller found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      message: "Best seller found Successfully",
+      bestSeller,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
+};
+
+exports.getNewArrivedProducts = async (req, res) => {
+  try {
+    //fetch latest 8 Product
+    const newArrivals = await Product.find().sort({ createdAt: -1 }).limit(8);
+    return res.status(200).json({
+      success: true,
+      message: "New Arrived Products fetched Successfully",
+      newArrivals,
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
   }
 };

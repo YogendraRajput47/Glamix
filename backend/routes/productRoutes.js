@@ -8,6 +8,8 @@ const {
   filterAndSortProduct,
   getSingleProductDetails,
   getSimilarProducts,
+  getBestSellerProducts,
+  getNewArrivedProducts,
 } = require("../controllers/productController");
 
 
@@ -35,6 +37,19 @@ router.delete("/:id",protect,isAdmin,deleteProduct);
 //@ Access Public
 router.get("/", filterAndSortProduct);
 
+
+//@route Get /api/products/best-seller
+//@ Retrieve the product with highest rating
+//@ Access Public
+router.get("/best-seller",getBestSellerProducts)
+
+
+//@route Get /api/products/new-arrivals
+//@ Retrieve the latest 8 products -Creation date
+//@ Access Public
+router.get("/new-arrivals",getNewArrivedProducts)
+
+
 //@route Get /api/products/:id
 //@ Get a single Product Details by its ID
 //@ Access Public
@@ -45,6 +60,8 @@ router.get("/:id",getSingleProductDetails)
 //@ Access Public
 
 router.get("/similar/:id",getSimilarProducts)
+
+
 
 
 module.exports=router;
