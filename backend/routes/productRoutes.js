@@ -4,6 +4,7 @@ const { protect, isAdmin } = require("../middlewares/authMiddleware");
 const {
   createProduct,
   updateProduct,
+  deleteProduct,
 } = require("../controllers/productController");
 
 
@@ -19,7 +20,13 @@ router.post("/",protect,isAdmin,createProduct);
 //@ Update the existing product by its ID
 //@ Access Private/Admin
 
-router.put("/:id",protect,isAdmin,updateProduct)
+router.put("/:id",protect,isAdmin,updateProduct);
+
+//@route DELETE /api/products/:id
+//@ Delete the existing product by its ID
+//@ Access Private/Admin
+
+router.delete("/:id",protect,isAdmin,deleteProduct);
 
 
 module.exports=router;

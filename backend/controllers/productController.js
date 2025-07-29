@@ -88,12 +88,11 @@ exports.updateProduct = async (req, res) => {
     //Finding the product by ID
     const productId = req.params.id;
     const product = await Product.findById(productId);
-    if(!product)
-    {
-        return res.status(404).json({
-            success:false,
-            message:"Product not found",
-        });
+    if (!product) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
     }
 
     if (product) {
@@ -133,3 +132,38 @@ exports.updateProduct = async (req, res) => {
     res.status(500).send("Server error", error);
   }
 };
+
+//deleteProduct
+exports.deleteProduct = async (req, res) => {
+  try {
+    //find the product by its ID
+    const productId = req.params.id;
+    const product = await Product.findById(productId);
+    if (product) {
+      //Remove the product from database
+      await product.deleteOne();
+      res.status(200).json({
+        success: true,
+        message: "Product removed Succcessfully",
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server Error");
+  }
+};
+
+
+exports.sortProducts=async(req,res)=>{
+  try{
+
+  }catch(error){
+      console.error(error);
+      return res.status(500).send("Server Error");
+  }
+}
